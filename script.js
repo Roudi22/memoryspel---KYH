@@ -9,6 +9,14 @@ const gameContainer = document.querySelector(".container");
 const turnTitle = document.querySelector(".turn")
 const player1Input = document.getElementById("player1c");
 const player2Input = document.getElementById("player2");
+const resetGameBtn = document.querySelector(".reset-game");
+const restartGameBtn = document.querySelector(".restart-game");
+const player1ScoreDisplay = document.querySelector(
+    ".players-points p:nth-child(1) #score"
+  );
+const player2ScoreDisplay = document.querySelector(
+    ".players-points p:nth-child(2) #score"
+  );
 
 let currentPlayer;
 let player1;
@@ -63,6 +71,10 @@ againstComStartBtn.addEventListener("click", () => {
       alert("Invalid input! Player name must not be empty and should contain at least 4 characters.");
     }
 });
+
+resetGameBtn.addEventListener("click", ()=> {
+    resetGame();
+})
 
 const cards = document.querySelectorAll(".card");
 let matched = 0;
@@ -132,21 +144,22 @@ function switchPlayers() {
 
 function updateScoreDisplay() {
     if(currentPlayer === player1) {
-        const player1ScoreDisplay = document.querySelector(
-          ".players-points p:nth-child(1) #score"
-        );
         player1ScoreDisplay.textContent = player1Score;
     } else {
-        const player2ScoreDisplay = document.querySelector(
-          ".players-points p:nth-child(2) #score"
-        );
         player2ScoreDisplay.textContent = player2Score;
     }
   }
 
+  function resetGame () {
+    player1Score=0;
+    player2Score=0;
+    player1ScoreDisplay.textContent = player1Score;
+    player2ScoreDisplay.textContent = player2Score;
+    currentPlayer = player1;
+    turnTitle.textContent = `${currentPlayer}s tur`
+    shuffleCard();
+  }
 function shuffleCard() {
-    player1Score = 0;
-    player2Score = 0;
     matched = 0;
     disableDeck = false;
     cardOne = cardTwo = "";
