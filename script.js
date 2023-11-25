@@ -10,13 +10,14 @@ const turnTitle = document.querySelector(".turn")
 const player1Input = document.getElementById("player1c");
 const player2Input = document.getElementById("player2");
 const resetGameBtn = document.querySelector(".reset-game");
-const restartGameBtn = document.querySelector(".restart-game");
+const restartGameBtn = document.querySelectorAll(".restart-game");
 const player1ScoreDisplay = document.querySelector(
     ".players-points p:nth-child(1) #score"
   );
 const player2ScoreDisplay = document.querySelector(
     ".players-points p:nth-child(2) #score"
   );
+const winnerPopup = document.querySelector(".winner-popup")
 
 let currentPlayer;
 let player1;
@@ -76,6 +77,12 @@ resetGameBtn.addEventListener("click", ()=> {
     resetGame();
 })
 
+restartGameBtn.forEach((btn)=> {
+    btn.addEventListener("click", ()=> {
+        location.reload();
+    })
+})
+
 const cards = document.querySelectorAll(".card");
 let matched = 0;
 let cardOne, cardTwo;
@@ -111,9 +118,11 @@ function matchCards(img1, img2) {
 
 
         if(matched === 12) {
-            setTimeout(() => {
-                winner = player1Score > player1Score ? player1 : player2;
-                console.log(winner)
+            winner = player1Score > player1Score ? player1 : player2;
+            displayWinner(winner);
+            setTimeout(() => {  
+                resetGame()
+                
                 return shuffleCard();
             }, 1000);
         }
@@ -149,6 +158,12 @@ function updateScoreDisplay() {
         player2ScoreDisplay.textContent = player2Score;
     }
   }
+
+function displayWinner(winnerName) {
+    gameContainer.classList.toggle("disable")
+    winnerPopup.classList.toggle("hide");
+    winnerPopup.querySelector(".winner").textContent = winnerName
+}
 
   function resetGame () {
     player1Score=0;
