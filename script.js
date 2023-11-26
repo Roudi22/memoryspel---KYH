@@ -17,7 +17,8 @@ const player1ScoreDisplay = document.querySelector(
 const player2ScoreDisplay = document.querySelector(
     ".players-points p:nth-child(2) #score"
   );
-const winnerPopup = document.querySelector(".winner-popup")
+const winnerPopup = document.querySelector(".winner-popup");
+const historyContainer = document.querySelector(".history-list");
 
 let currentPlayer;
 let player1;
@@ -89,6 +90,7 @@ let cardOne, cardTwo;
 let disableDeck = false;
 
 function flipCard({target: clickedCard}) {
+    
     if(cardOne !== clickedCard && !disableDeck) {
         clickedCard.classList.add("flip");
         if(!cardOne) {
@@ -96,8 +98,8 @@ function flipCard({target: clickedCard}) {
         }
         cardTwo = clickedCard;
         disableDeck = true;
-        let cardOneImg = cardOne.querySelector(".back-view img").src,
-        cardTwoImg = cardTwo.querySelector(".back-view img").src;
+        let cardOneImg = cardOne.querySelector(".back-view img").getAttribute("src"),
+        cardTwoImg = cardTwo.querySelector(".back-view img").getAttribute("src");
         matchCards(cardOneImg, cardTwoImg);
     }
     
@@ -106,7 +108,7 @@ function flipCard({target: clickedCard}) {
 function matchCards(img1, img2) {
     if(img1 === img2) {
         matched++;
-
+        addToHistory(img1, currentPlayer)
         if (currentPlayer === player1) {
             player1Score++;
           } else {
@@ -118,7 +120,14 @@ function matchCards(img1, img2) {
 
 
         if(matched === 12) {
-            winner = player1Score > player1Score ? player1 : player2;
+            winner = player1Score > player2Score ? player1 : player2;
+            if ( player1Score > player2Score) {
+                winner = player1
+            } else if ( player1Score < player2Score) {
+                winner = player2
+            } else {
+                winner = "Oavgjort"
+            }
             displayWinner(winner);
             setTimeout(() => {  
                 resetGame()
@@ -159,6 +168,28 @@ function updateScoreDisplay() {
     }
   }
 
+  function addToHistory (match, player) {
+    const matchTexts = {
+        "images/img-1.png":"hittade PHP",
+        "images/img-2.png":"hittade HTML",
+        "images/img-3.png":"hittade CSS",
+        "images/img-4.png":"hittade JavaScript",
+        "images/img-5.png":"hittade React",
+        "images/img-6.png":"hittade Angular",
+        "images/img-7.png":"hittade Vue",
+        "images/img-8.png":"hittade Sass",
+        "images/img-9.png":"hittade NodeJs",
+        "images/img-10.png":"hittade Bootstrap",
+        "images/img-11.png":"hittade Tailwind",
+        "images/img-12.png":"hittade Wordpress",
+    }
+    
+    const matchText = `${player} ${matchTexts[match]}`
+    const listHistoryItem = document.createElement("li");
+    listHistoryItem.textContent = matchText;
+    historyContainer.appendChild(listHistoryItem);
+    historyContainer.scrollTop = historyContainer.scrollHeight;
+  }
 function displayWinner(winnerName) {
     gameContainer.classList.toggle("disable")
     winnerPopup.classList.toggle("hide");
