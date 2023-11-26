@@ -8,6 +8,7 @@ const modePopup = document.querySelector(".popup-mode");
 const gameContainer = document.querySelector(".container");
 const turnTitle = document.querySelector(".turn")
 const player1Input = document.getElementById("player1c");
+const playerInput = document.getElementById("player1d")
 const player2Input = document.getElementById("player2");
 const resetGameBtn = document.querySelector(".reset-game");
 const restartGameBtn = document.querySelectorAll(".restart-game");
@@ -63,10 +64,15 @@ twoPlayersStartBtn.addEventListener("click", () => {
 });
   
 againstComStartBtn.addEventListener("click", () => {
-    const player1Input = document.getElementById("player1");
-    const player1Name = player1Input.value.trim();
-  
-    if (player1Name.length > 4) {
+    currentPlayer = playerInput.value.toUpperCase();
+    
+    turnTitle.textContent = `${currentPlayer}s tur`
+    player1 =  playerInput.value.toUpperCase();
+    player2 =  "Dator";
+    const playerName = playerInput.value.trim();
+    document.getElementById("player1-name").textContent = player1;
+    document.getElementById("player2-name").textContent = player2;
+    if (playerName.length > 4) {
         againstComPopup.classList.toggle("hide")
         gameContainer.classList.remove("disable")
     } else {
