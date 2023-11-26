@@ -20,7 +20,7 @@ const player2ScoreDisplay = document.querySelector(
   );
 const winnerPopup = document.querySelector(".winner-popup");
 const historyContainer = document.querySelector(".history-list");
-
+const highScoreContainer = document.querySelector(".highscore");
 let currentPlayer;
 let player1;
 let player2;
@@ -34,12 +34,6 @@ twoPlayersBtn.addEventListener("click", () => {
     modePopup.classList.toggle("hide");
     twoPlayersPopup.classList.toggle("hide");
   });
-  
-againstComBtn.addEventListener("click", () => {
-    mode = "computer"
-    modePopup.classList.toggle("hide");
-    againstComPopup.classList.toggle("hide");
-});
   
 twoPlayersStartBtn.addEventListener("click", () => {
     currentPlayer = player1Input.value.toUpperCase();
@@ -56,23 +50,6 @@ twoPlayersStartBtn.addEventListener("click", () => {
     document.getElementById("player2-name").textContent = player2;
     if (player1Name.length > 4 && player2Name.length > 4) {
         twoPlayersPopup.classList.toggle("hide");
-        gameContainer.classList.remove("disable")
-    } else {
-      alert("Invalid input! Player name must not be empty and should contain at least 4 characters.");
-    }
-});
-  
-againstComStartBtn.addEventListener("click", () => {
-    currentPlayer = playerInput.value.toUpperCase();
-    
-    turnTitle.textContent = `${currentPlayer}s tur`
-    player1 =  playerInput.value.toUpperCase();
-    player2 =  "Dator";
-    const playerName = playerInput.value.trim();
-    document.getElementById("player1-name").textContent = player1;
-    document.getElementById("player2-name").textContent = player2;
-    if (playerName.length > 4) {
-        againstComPopup.classList.toggle("hide")
         gameContainer.classList.remove("disable")
     } else {
       alert("Invalid input! Player name must not be empty and should contain at least 4 characters.");
