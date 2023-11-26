@@ -195,8 +195,14 @@ function displayWinner(winnerName) {
     winnerPopup.classList.toggle("hide");
     winnerPopup.querySelector(".winner").textContent = winnerName
 }
-
+function clearHistory() {
+    // Remove all child elements from the history container
+    while (historyContainer.firstChild) {
+      historyContainer.removeChild(historyContainer.firstChild);
+    }
+  }
   function resetGame () {
+    clearHistory();
     player1Score=0;
     player2Score=0;
     player1ScoreDisplay.textContent = player1Score;
