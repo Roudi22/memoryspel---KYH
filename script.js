@@ -49,7 +49,7 @@ twoPlayersStartBtn.addEventListener("click", () => {
     gameContainer.classList.remove("disable");
   } else {
     alert(
-      "Invalid input! Player name must not be empty and should contain at least 4 characters."
+      "Invalid input! Player name must not be empty and should contain at least 3 characters."
     );
   }
 });
