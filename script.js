@@ -31,20 +31,26 @@ twoPlayersBtn.addEventListener("click", () => {
   twoPlayersPopup.classList.toggle("hide");
 });
 
+againstComBtn.addEventListener("click", () => {
+  mode = "computer";
+  modePopup.classList.toggle("hide");
+  againstComPopup.classList.toggle("hide");
+});
+
 twoPlayersStartBtn.addEventListener("click", () => {
-  currentPlayer = player1Input.value.toUpperCase();
+  currentPlayer = player1Input.value;
 
   turnTitle.textContent = `${currentPlayer}s tur`;
-  player1 = player1Input.value.toUpperCase();
-  player2 = player2Input.value.toUpperCase();
+  player1 = player1Input.value;
+  player2 = player2Input.value;
 
   const player1Name = player1Input.value.trim();
   const player2Name = player2Input.value.trim();
 
-  document.getElementById("player1-name").textContent = player1;
-  currentPlayer = player1Input.value.toUpperCase();
-  document.getElementById("player2-name").textContent = player2;
-  if (player1Name.length >= 3 && player2Name.length >= 3) {
+  document.getElementById("player1-name").textContent = player1Input.value;
+  currentPlayer = player1Input.value;
+  document.getElementById("player2-name").textContent = player2Input.value;
+  if (player1Name.length > 4 && player2Name.length > 4) {
     twoPlayersPopup.classList.toggle("hide");
     gameContainer.classList.remove("disable");
   } else {
@@ -54,12 +60,24 @@ twoPlayersStartBtn.addEventListener("click", () => {
   }
 });
 
-resetGameBtn.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    resetGame();
-    winnerPopup.classList.add("hide");
+againstComStartBtn.addEventListener("click", () => {
+  const player1Input = document.getElementById("player1");
+  const player1Name = player1Input.value.trim();
+
+  if (player1Name.length > 4) {
+    againstComPopup.classList.toggle("hide");
     gameContainer.classList.remove("disable");
-  });
+  } else {
+    alert(
+      "Invalid input! Player name must not be empty and should contain at least 4 characters."
+    );
+  }
+});
+
+resetGameBtn.addEventListener("click", () => {
+  resetGame();
+  winnerPopup.classList.add("hide");
+  gameContainer.classList.remove("disable");
 });
 
 restartGameBtn.forEach((btn) => {
