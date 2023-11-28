@@ -92,6 +92,7 @@ function flipCard({ target: clickedCard }) {
   }
 }
 
+//  hämta sprelaren med högst antal vinster från local storage--------------
 function printTopSpelare() {
   let topSpelare = document.getElementById("topPlayer");
   topSpelare.innerText = `${localStorage.getItem("topPlayerName") || ""} har (${
@@ -127,10 +128,6 @@ function matchCards(img1, img2) {
         topPlayerName = playerName;
         topPlayerCount = count;
       }
-
-      document.getElementById(
-        "topPlayer"
-      ).innerText = `${topPlayerName} (${topPlayerCount} vann)`;
     }
 
     // localStorage -----------------------------------------------------------
