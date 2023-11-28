@@ -32,6 +32,12 @@ twoPlayersBtn.addEventListener("click", () => {
   twoPlayersPopup.classList.toggle("hide");
 });
 
+againstComBtn.addEventListener("click", () => {
+    mode = "computer"
+    modePopup.classList.toggle("hide");
+    againstComPopup.classList.toggle("hide");
+});
+
 twoPlayersStartBtn.addEventListener("click", () => {
 
     currentPlayer = player1Input.value.toUpperCase();
