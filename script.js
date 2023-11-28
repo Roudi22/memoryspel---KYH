@@ -177,20 +177,30 @@ function matchCards(img1, img2) {
                 
                 return shuffleCard();
             }, 1000);
-        } if ( matched !== 12 && currentPlayer === player2) {
+        } if ( matched !== 12 && currentPlayer === "Dator" && mode === "computer") {
           cardOne.removeEventListener("click", flipCard);
         cardTwo.removeEventListener("click", flipCard);
           cardOne = cardTwo = "";
         disableDeck = false;
         setTimeout( flipComputerCardHelper, 1000)
           
-        }
-        cardOne.removeEventListener("click", flipCard);
+        } else if (matched !== 12 && currentPlayer === player1 && mode === "computer"){
+          cardOne.removeEventListener("click", flipCard);
         cardTwo.removeEventListener("click", flipCard);
+          cardOne = cardTwo = "";
+        disableDeck = false;
+        }
+        
+        else if ( matched !== 12 && mode !== "computer") {
+          cardOne.removeEventListener("click", flipCard);
+          cardTwo.removeEventListener("click", flipCard);
+
+        }
         cardOne = cardTwo = "";
         return disableDeck = false;
     } else {
-        switchPlayers();
+      setTimeout(switchPlayers,1000)
+        
     }
     setTimeout(() => {
         cardOne.classList.add("shake");
