@@ -2,6 +2,7 @@ const twoPlayersBtn = document.getElementById("two-players");
 const twoPlayersPopup = document.querySelector(".two-players");
 const twoPlayersStartBtn = document.getElementById("two-players-start-btn");
 const modePopup = document.querySelector(".popup-mode");
+const againstComPopup = document.querySelector(".against-com");
 const gameContainer = document.querySelector(".container");
 const turnTitle = document.querySelector(".turn");
 const player1Input = document.getElementById("player1c");
