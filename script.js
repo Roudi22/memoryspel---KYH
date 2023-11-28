@@ -92,6 +92,14 @@ function flipCard({ target: clickedCard }) {
   }
 }
 
+function printTopSpelare() {
+  let topSpelare = document.getElementById("topPlayer");
+  topSpelare.innerText = `${localStorage.getItem("topPlayerName") || ""} har (${
+    localStorage.getItem("topPlayerCount") || 0
+  }) Vinster`;
+}
+printTopSpelare();
+
 // viktigt ----------------------------------------------------------------
 function matchCards(img1, img2) {
   if (img1 === img2) {
