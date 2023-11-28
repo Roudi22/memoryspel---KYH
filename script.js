@@ -10,7 +10,7 @@ const turnTitle = document.querySelector(".turn")
 const player1Input = document.getElementById("player1c");
 const playerInput = document.getElementById("player1d")
 const player2Input = document.getElementById("player2");
-const resetGameBtn = document.querySelector(".reset-game");
+const resetGameBtn = document.querySelectorAll(".reset-game");
 const restartGameBtn = document.querySelectorAll(".restart-game");
 const player1ScoreDisplay = document.querySelector(
     ".players-points p:nth-child(1) #score"
@@ -55,11 +55,11 @@ twoPlayersStartBtn.addEventListener("click", () => {
     document.getElementById("player1-name").textContent = player1;
     currentPlayer = player1Input.value.toUpperCase();
     document.getElementById("player2-name").textContent = player2;
-    if (player1Name.length > 4 && player2Name.length > 4) {
+    if (player1Name.length >= 3 && player2Name.length >= 3) {
         twoPlayersPopup.classList.toggle("hide");
         gameContainer.classList.remove("disable")
     } else {
-      alert("Invalid input! Player name must not be empty and should contain at least 4 characters.");
+      alert("Invalid input! Player name must not be empty and should contain at least 3 characters.");
     }
 });
   
@@ -72,17 +72,20 @@ againstComStartBtn.addEventListener("click", () => {
     const playerName = playerInput.value.trim();
     document.getElementById("player1-name").textContent = player1;
     document.getElementById("player2-name").textContent = player2;
-    if (playerName.length > 4) {
+    if (playerName.length >= 3) {
         againstComPopup.classList.toggle("hide")
         gameContainer.classList.remove("disable")
     } else {
-      alert("Invalid input! Player name must not be empty and should contain at least 4 characters.");
+      alert("Invalid input! Player name must not be empty and should contain at least 3 characters.");
     }
 });
 
-resetGameBtn.addEventListener("click", ()=> {
+resetGameBtn.forEach((btn) => {
+  btn.addEventListener("click", () => {
     resetGame();
-})
+    winnerPopup.classList.add("hide");
+    gameContainer.classList.remove("disable");
+  })});
 
 restartGameBtn.forEach((btn)=> {
     btn.addEventListener("click", ()=> {
@@ -142,8 +145,6 @@ function flipComputerCard(clickedCard1,clickedCard2) {
     // Choose the first two cards
     const chosenCard1 = unflippedCards[index1];
     const chosenCard2 = unflippedCards[index2];
-  
-    console.log(chosenCard1, chosenCard2)
     // Simulate a click event on the chosen cards
     flipComputerCard(chosenCard1,chosenCard2);
   }
