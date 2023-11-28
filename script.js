@@ -5,6 +5,7 @@ const modePopup = document.querySelector(".popup-mode");
 const gameContainer = document.querySelector(".container");
 const turnTitle = document.querySelector(".turn");
 const player1Input = document.getElementById("player1c");
+const playerInput = document.getElementById("player1d")
 const player2Input = document.getElementById("player2");
 const resetGameBtn = document.querySelectorAll(".reset-game");
 const restartGameBtn = document.querySelectorAll(".restart-game");
@@ -32,26 +33,42 @@ twoPlayersBtn.addEventListener("click", () => {
 });
 
 twoPlayersStartBtn.addEventListener("click", () => {
-  currentPlayer = player1Input.value;
 
-  turnTitle.textContent = `${currentPlayer}s tur`;
-  player1 = player1Input.value;
-  player2 = player2Input.value;
+    currentPlayer = player1Input.value.toUpperCase();
+    
+    turnTitle.textContent = `${currentPlayer}s tur`
+    player1 =  player1Input.value.toUpperCase();
+    player2 =  player2Input.value.toUpperCase();
 
-  const player1Name = player1Input.value.trim();
-  const player2Name = player2Input.value.trim();
+    const player1Name = player1Input.value.trim();
+    const player2Name = player2Input.value.trim();
 
-  document.getElementById("player1-name").textContent = player1Input.value;
-  currentPlayer = player1Input.value;
-  document.getElementById("player2-name").textContent = player2Input.value;
-  if (player1Name.length >= 3 && player2Name.length >= 3) {
-    twoPlayersPopup.classList.toggle("hide");
-    gameContainer.classList.remove("disable");
-  } else {
-    alert(
-      "Invalid input! Player name must not be empty and should contain at least 3 characters."
-    );
-  }
+    document.getElementById("player1-name").textContent = player1;
+    currentPlayer = player1Input.value.toUpperCase();
+    document.getElementById("player2-name").textContent = player2;
+    if (player1Name.length >= 3 && player2Name.length >= 3) {
+        twoPlayersPopup.classList.toggle("hide");
+        gameContainer.classList.remove("disable")
+    } else {
+      alert("Invalid input! Player name must not be empty and should contain at least 3 characters.");
+    }
+});
+  
+againstComStartBtn.addEventListener("click", () => {
+    currentPlayer = playerInput.value.toUpperCase();
+    
+    turnTitle.textContent = `${currentPlayer}s tur`
+    player1 =  playerInput.value.toUpperCase();
+    player2 =  "Dator";
+    const playerName = playerInput.value.trim();
+    document.getElementById("player1-name").textContent = player1;
+    document.getElementById("player2-name").textContent = player2;
+    if (playerName.length >= 3) {
+        againstComPopup.classList.toggle("hide")
+        gameContainer.classList.remove("disable")
+    } else {
+      alert("Invalid input! Player name must not be empty and should contain at least 3 characters.");
+    }
 });
 
 resetGameBtn.forEach((btn) => {
@@ -59,8 +76,7 @@ resetGameBtn.forEach((btn) => {
     resetGame();
     winnerPopup.classList.add("hide");
     gameContainer.classList.remove("disable");
-  });
-});
+  })});
 
 restartGameBtn.forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -89,59 +105,118 @@ function flipCard({ target: clickedCard }) {
     matchCards(cardOneImg, cardTwoImg);
   }
 }
+function flipComputerCard(clickedCard1,clickedCard2) {
+    if(cardOne !== clickedCard1 && !disableDeck) {
+        clickedCard1.classList.add("flip");
+        if(!cardOne) {
+            cardOne = clickedCard1;
+        }
+        clickedCard2.classList.add("flip");
+        cardTwo = clickedCard2;
+        disableDeck = true;
+        let cardOneImg = cardOne.querySelector(".back-view img").getAttribute("src"),
+        cardTwoImg = cardTwo.querySelector(".back-view img").getAttribute("src");
+        matchCards(cardOneImg, cardTwoImg);
+    }
+    
+}
+  
+  function flipComputerCardHelper() {
+    // Helper function to continue the computer's turn
+    // Get all cards that are not flipped
+    const unflippedCards = Array.from(document.querySelectorAll('.card:not(.flip)'));
+  
+    // Choose two random indices
+    const index1 = Math.floor(Math.random() * unflippedCards.length);
+    let index2;
+  
+    do {
+      index2 = Math.floor(Math.random() * unflippedCards.length);
+    } while (index2 === index1); // Ensure index2 is different from index1
+  
+    // Choose the first two cards
+    const chosenCard1 = unflippedCards[index1];
+    const chosenCard2 = unflippedCards[index2];
+    // Simulate a click event on the chosen cards
+    flipComputerCard(chosenCard1,chosenCard2);
+  }
+
+
 
 // viktigt ----------------------------------------------------------------
 function matchCards(img1, img2) {
-  if (img1 === img2) {
-    matched++;
-    addToHistory(img1, currentPlayer);
-    if (currentPlayer === player1) {
-      player1Score++;
+    if(img1 === img2) {
+        matched++;
+        addToHistory(img1, currentPlayer)
+        if (currentPlayer === player1) {
+            player1Score++;
+          } else {
+            player2Score++;
+          }
+      
+          // Update the score display
+          updateScoreDisplay();
+        if(matched === 12) {
+            winner = player1Score > player2Score ? player1 : player2;
+            if ( player1Score > player2Score) {
+                winner = player1
+            } else if ( player1Score < player2Score) {
+                winner = player2
+            } else {
+                winner = "Oavgjort"
+            }
+            displayWinner(winner);
+            setTimeout(() => {  
+                resetGame()
+                
+                return shuffleCard();
+            }, 1000);
+        } if ( matched !== 12 && currentPlayer === "Dator" && mode === "computer") {
+          cardOne.removeEventListener("click", flipCard);
+        cardTwo.removeEventListener("click", flipCard);
+          cardOne = cardTwo = "";
+        disableDeck = false;
+        setTimeout( flipComputerCardHelper, 1000)
+          
+        } else if (matched !== 12 && currentPlayer === player1 && mode === "computer"){
+          cardOne.removeEventListener("click", flipCard);
+        cardTwo.removeEventListener("click", flipCard);
+          cardOne = cardTwo = "";
+        disableDeck = false;
+        }
+        
+        else if ( matched !== 12 && mode !== "computer") {
+          cardOne.removeEventListener("click", flipCard);
+          cardTwo.removeEventListener("click", flipCard);
+
+        }
+        cardOne = cardTwo = "";
+        return disableDeck = false;
     } else {
-      player2Score++;
+      setTimeout(switchPlayers,1000)
+        
     }
-    // Update the score display
-    updateScoreDisplay();
+    setTimeout(() => {
+        cardOne.classList.add("shake");
+        cardTwo.classList.add("shake");
+    }, 400);
 
-    if (matched === 12) {
-      winner = player1Score > player2Score ? player1 : player2;
-      if (player1Score > player2Score) {
-        winner = player1;
-        // localStorage.setItem(`${player1},${++contwinner}`)
-      } else if (player1Score < player2Score) {
-        winner = player2;
-      } else {
-        winner = "Oavgjort";
-      }
-      displayWinner(winner);
-      setTimeout(() => {
-        resetGame();
-        return shuffleCard();
-      }, 1000);
-    }
-    cardOne.removeEventListener("click", flipCard);
-    cardTwo.removeEventListener("click", flipCard);
-    cardOne = cardTwo = "";
-    return (disableDeck = false);
-  } else {
-    switchPlayers();
-  }
-  setTimeout(() => {
-    cardOne.classList.add("shake");
-    cardTwo.classList.add("shake");
-  }, 400);
-
-  setTimeout(() => {
-    cardOne.classList.remove("shake", "flip");
-    cardTwo.classList.remove("shake", "flip");
-    cardOne = cardTwo = "";
-    disableDeck = false;
-  }, 1200);
+    setTimeout(() => {
+        cardOne.classList.remove("shake", "flip");
+        cardTwo.classList.remove("shake", "flip");
+        cardOne = cardTwo = "";
+        disableDeck = false;
+        
+    }, 1200);
 }
 
 function switchPlayers() {
-  currentPlayer = currentPlayer === player1 ? player2 : player1;
-  turnTitle.textContent = `${currentPlayer}s tur`;
+    currentPlayer = currentPlayer === player1 ? player2 : player1;
+    turnTitle.textContent = `${currentPlayer}s tur`
+    if (currentPlayer === "Dator") {
+        // If the current player is the computer, delay the computer's turn
+        setTimeout(flipComputerCardHelper, 1300); // Adjust the delay as needed
+      }
 }
 
 function updateScoreDisplay() {
