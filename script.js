@@ -213,7 +213,9 @@ function matchCards(img1, img2) {
                 
                 return shuffleCard();
             }, 1000);
-        } if ( matched !== 12 && currentPlayer === "Dator" && mode === "computer") {
+        } 
+        
+        if ( matched !== 12 && currentPlayer === "Dator" && mode === "computer") {
           cardOne.removeEventListener("click", flipCard);
         cardTwo.removeEventListener("click", flipCard);
           cardOne = cardTwo = "";
