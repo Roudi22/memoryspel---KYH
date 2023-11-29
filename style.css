@@ -91,7 +91,9 @@ body{
   box-shadow: -2px 2px 51px 18px rgba(0,0,0,0.32);
   background-color: #fff;  
 }
-
+button:active {
+  transform: translateY(4px);
+}
 .history-points {
   
   display: flex;
