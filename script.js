@@ -26,6 +26,8 @@ let player1;
 let player2;
 let player1Score = 0;
 let player2Score = 0;
+let winnerscore1= 0;
+let winnerscore2= 0;
 let winner;
 let mode;
 
@@ -85,6 +87,7 @@ resetGameBtn.forEach((btn) => {
     resetGame();
     winnerPopup.classList.add("hide");
     gameContainer.classList.remove("disable");
+    printTopSpelare();
   })});
 
 restartGameBtn.forEach((btn) => {
@@ -150,6 +153,31 @@ function flipComputerCard(clickedCard1,clickedCard2) {
     flipComputerCard(chosenCard1,chosenCard2);
   }
 
+  //  hämta sprelaren med högst antal vinster från local storage--------------
+function printTopSpelare() {
+  let topSpelare = document.getElementById("topPlayer");
+  topSpelare.innerText = `${localStorage.getItem("topPlayerName") || ""} har (${
+    localStorage.getItem("topPlayerCount") || 0
+  }) Vinster`;
+}
+printTopSpelare();
+
+ // localStorage -----------------------------------------------------------
+
+ function updateWinCount(playerName, count) {
+  localStorage.setItem(`winCount_${playerName}`, count);
+
+  let topPlayerName = localStorage.getItem("topPlayerName") || "";
+  let topPlayerCount = localStorage.getItem("topPlayerCount") || 0;
+
+  if (count > topPlayerCount) {
+    localStorage.setItem("topPlayerName", playerName);
+    localStorage.setItem("topPlayerCount", count);
+    topPlayerName = playerName;
+    topPlayerCount = count;
+  }
+}
+
 
 
 // viktigt ----------------------------------------------------------------
@@ -167,10 +195,15 @@ function matchCards(img1, img2) {
           updateScoreDisplay();
         if(matched === 12) {
             winner = player1Score > player2Score ? player1 : player2;
+            
             if ( player1Score > player2Score) {
                 winner = player1
+                winnerscore1++;
+            updateWinCount(player1, winnerscore1);
             } else if ( player1Score < player2Score) {
-                winner = player2
+                winner = player2;
+                winnerscore2++;
+                updateWinCount(player2, winnerscore2);
             } else {
                 winner = "Oavgjort"
             }
