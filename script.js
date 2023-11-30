@@ -103,7 +103,7 @@ let disableDeck = false;
 
 // viktigt ----------------------------------------------------------------
 function flipCard({ target: clickedCard }) {
-  if (cardOne !== clickedCard && !disableDeck) {
+  if ( cardOne !== clickedCard && !disableDeck && currentPlayer !== "Dator") {
     clickedCard.classList.add("flip");
     if (!cardOne) {
       return (cardOne = clickedCard);
