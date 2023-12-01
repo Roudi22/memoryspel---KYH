@@ -1,3 +1,4 @@
+
 const twoPlayersBtn = document.getElementById("two-players");
 const againstComBtn = document.getElementById("against-com");
 const twoPlayersPopup = document.querySelector(".two-players");
@@ -83,8 +84,10 @@ againstComStartBtn.addEventListener("click", () => {
 });
 
 resetGameBtn.forEach((btn) => {
+  
   btn.addEventListener("click", () => {
     resetGame();
+    stopConfetti();
     winnerPopup.classList.add("hide");
     gameContainer.classList.remove("disable");
     printTopSpelare();
@@ -93,6 +96,7 @@ resetGameBtn.forEach((btn) => {
 restartGameBtn.forEach((btn) => {
   btn.addEventListener("click", () => {
     location.reload();
+    stopConfetti();
   });
 });
 
@@ -293,6 +297,7 @@ function addToHistory(match, player) {
   historyContainer.scrollTop = historyContainer.scrollHeight;
 }
 function displayWinner(winnerName) {
+  startConfetti();
   gameContainer.classList.toggle("disable");
   winnerPopup.classList.toggle("hide");
   winnerPopup.querySelector(".winner").textContent = winnerName;
