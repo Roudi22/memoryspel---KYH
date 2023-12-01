@@ -22,7 +22,6 @@ body{
   user-select: none;
 }
 .popup-mode, .two-players, .against-com, .winner-popup {
-  border: 1px solid red;
   position: fixed;
   z-index: 10;
   background-color: aliceblue;
@@ -35,7 +34,6 @@ body{
 }
 
 .popup-mode div, .two-players div, .against-com div, .winner-popup div{
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   text-align: center;
