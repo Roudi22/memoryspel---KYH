@@ -81,7 +81,7 @@ body{
   border: 1px solid #ccc;
 }
   .wrapper{
-    margin-inline: auto;
+  margin-inline: auto;
   display: flex;
   justify-content: space-between;
   gap: 5rem;
@@ -95,6 +95,8 @@ button:active {
   transform: translateY(4px);
 }
 .history-points {
+  
+  width: 700px;
   
   display: flex;
   flex-direction: column;
@@ -227,9 +229,14 @@ button:active {
   transform: rotateY(180deg);
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 880px) {
   .wrapper {
     flex-direction: column-reverse;
+    align-items: center;
+    max-width: 700px;
+  }
+  .history-points {
+    width: 80%;
   }
   .cards{
     margin-inline: auto;
@@ -255,5 +262,15 @@ button:active {
   }
   .card .back-view img{
     max-width: 35px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .history-points {
+    width: 100%;
+  }
+  .cards{
+    height: 250px;
+    width: 250px;
   }
 }
