@@ -265,6 +265,9 @@ canvas {
   .card .back-view img{
     max-width: 35px;
   }
+  .turn {
+    font-size: 30px;
+  }
 }
 
 @media screen and (max-width: 360px) {
