@@ -22,15 +22,20 @@ body{
   user-select: none;
 }
 .popup-mode, .two-players, .against-com, .winner-popup {
+  border: 1px solid red;
   position: fixed;
   z-index: 10;
   background-color: aliceblue;
   padding: 20px;
   border-radius: 10px;
   width: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
 }
 
 .popup-mode div, .two-players div, .against-com div, .winner-popup div{
+  border: 1px solid red;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -230,6 +235,7 @@ button:active {
 }
 
 @media screen and (max-width: 880px) {
+  
   .wrapper {
     flex-direction: column-reverse;
     align-items: center;
